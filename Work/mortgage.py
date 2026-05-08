@@ -30,5 +30,4 @@ while principal > 0:
 
     print(round(total_paid, 2), round(left_to_pay, 2))
 
-print('Total paid', round(total_paid,2))
-print('Months', months)
+print(f'Total paid {total_paid:0.2f} in {months} months')
