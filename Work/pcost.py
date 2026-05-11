@@ -2,15 +2,18 @@
 #
 # Exercise 1.27
 
-total_cost = 0.0
+def portfolio_cost(filename):
+    with open(filename, 'rt') as f:
+        total_cost = 0.0
+        headers = next(f)
+        for line in f:
+            row = line.split(',')
+            try:
+                total_cost += int(row[1]) * float(row[2])
+            except ValueError:
+                continue
+    return total_cost
 
-f = open('Data/portfolio.csv', 'rt')
-headers = next(f)
-for line in f:
-    row = line.split(',')
-    print(row)
-    total_cost += int(row[1]) * float(row[2])
+cost = portfolio_cost('Data/missing.csv')
+print('Total cost:', cost)
 
-print(total_cost)
-
-f.close()
