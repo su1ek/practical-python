@@ -66,8 +66,14 @@ for name, shares, price in portfolio:
 
 gain_loss = current_value - total
 
+headers = ('Name', 'Shares', 'Price', 'Change')
+
 print('Total cost:', total)
 print('Today value:', current_value)
 print(f'Gain/Loss: {gain_loss:0.2f}')
-for r in report:
-    print(r)
+for h in headers:
+    print(f'{h:>10s}', end=" ")
+print()
+print(f'{"-"*10} {"-"*10} {"-"*10} {"-"*10}')
+for name, shares, price, change in report:
+    print(f'{name:>10s} {shares:>10d} {f"${price:.2f}":>10s} {change:10.2f}')
