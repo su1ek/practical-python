@@ -42,6 +42,15 @@ def read_prices(filename):
                 continue
         return prices
 
+def make_report(portfolio, prices):
+    report = []
+    for name, shares, price in portfolio:
+        if name in prices:
+            current_price = prices[name]
+            change = current_price - price
+            report.append((name,shares,price,change))
+    return report
+
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
@@ -49,7 +58,7 @@ else:
 
 portfolio = read_portfolio('Data/portfoliodate.csv')
 prices = read_prices('Data/prices.csv')
-
+report = make_report(portfolio, prices)
 total = 0.0
 current_value = 0.0
 
@@ -61,6 +70,14 @@ for name, shares, price in portfolio:
 
 gain_loss = current_value - total
 
+headers = ('Name', 'Shares', 'Price', 'Change')
+
 print('Total cost:', total)
 print('Today value:', current_value)
 print(f'Gain/Loss: {gain_loss:0.2f}')
+for h in headers:
+    print(f'{h:>10s}', end=" ")
+print()
+print(f'{"-"*10} {"-"*10} {"-"*10} {"-"*10}')
+for name, shares, price, change in report:
+    print(f'{name:>10s} {shares:>10d} {f"${price:.2f}":>10s} {change:10.2f}')
