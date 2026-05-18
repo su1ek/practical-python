@@ -13,12 +13,16 @@ def read_portfolio(filename):
         total_cost = 0.0
         rows = csv.reader(f)
         headers = next(rows)
-        for row in rows:
+        for n, row in enumerate(rows, start=1):
+            record = dict(zip(headers, row))
             try:
-                holding = (row[0], int(row[1]), float(row[2]))
+                name = record['name']
+                num_shares = int(record['shares'])
+                price = float(record['price'])
+                holding = (name, num_shares, price)
                 portfolio.append(holding)
             except ValueError:
-                continue
+                print(f"Row {n}: Couldn't convert: {row}")
     return portfolio
 
 def read_prices(filename):
@@ -43,7 +47,7 @@ if len(sys.argv) == 2:
 else:
     filename = 'Data/portfolio.csv'
 
-portfolio = read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfoliodate.csv')
 prices = read_prices('Data/prices.csv')
 
 total = 0.0
